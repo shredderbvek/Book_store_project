@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'partials/_navbar.html' %}
+    {% include 'partials/_alerts.html' %}
+    <!-- registration section -->
+    <section id="register">
+      <div class="form-container">
+        <div class="card">
+          <div class="card-header bg-primary">
+            <h4 class="text-light">
+              <i class="fas fa-user-plus"></i> Register
+            </h4>
+          </div>
+          <div class="card-body">
+            <form method="post" class="form-group">
+                {% csrf_token %}
+              <input
+                name="first-name"
+                type="text"
+                class="form-control mb-3"
+                placeholder="First Name"
+                required
+              />
+              <input
+                name="last-name"
+                type="text"
+                class="form-control mb-3"
+                placeholder="Last Name"
+                required
+              />
+              <input
+                name="username"
+                type="text"
+                class="form-control mb-3"
+                placeholder="Username"
+                required
+              />
+              <input
+                name="email"
+                type="email"
+                class="form-control mb-3"
+                placeholder="email"
+                required
+              />
+              <input
+                name="password"
+                type="password"
+                class="form-control mb-3"
+                placeholder="Password"
+                required
+              />
+              <input
+                name="confirm-password"
+                type="password"
+                class="form-control mb-3"
+                placeholder="Confirm Password"
+                required
+              />
+              <input
+                class="send btn btn-secondary btn-block text-light"
+                type="submit"
+                value="Register"
+                required
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% include 'partials/_footer.html' %}
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'partials/_navbar.html' %}
+    {% include 'partials/_alerts.html' %}
+
+    <!-- showcase section -->
+    <section id="showcase" class="d-none d-sm-block">
+      <div id="showcaseSlider" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li
+            class="active"
+            data-target="#showcaseSlider"
+            data-slide-to="0"
+          ></li>
+          <li data-target="#showcaseSlider" data-slide-to="1"></li>
+          <li data-target="#showcaseSlider" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item carousel-image-1 active">
+            <div class="dark-overlay">
+              <div class="container">
+                <div class="carousel-caption d-none d-sm-block text-left mb-5">
+                  <h1 class="display-3">A bite for everyone</h1>
+                  <p class="lead">
+                    We have a diverse range of choices for all book connoisseurs
+                    like you.
+                  </p>
+                  <a href="{% url 'bookListings' %}" class="btn btn-outline-secondary btn-lg"
+                    >Browse Now</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item carousel-image-2">
+            <div class="dark-overlay">
+              <div class="container">
+                <div
+                  class="carousel-caption d-none d-sm-block text-center mb-5"
+                >
+                  <h1 class="display-3">Companion</h1>
+                  <p class="lead">
+                    Books are the best companion; No complaints, no demands.
+                  </p>
+                  <a href="{% url 'bookListings' %}" class="btn btn-outline-secondary btn-lg"
+                    >Browse Now</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item carousel-image-3">
+            <div class="dark-overlay">
+              <div class="container">
+                <div
+                  class="carousel-caption d-none d-sm-block text-center mb-5"
+                >
+                  <h1 class="display-3">One click away</h1>
+                  <p class="lead">
+                    Reading a book is an euphoric feeling, and we would like to
+                    ensure it for you. We always want to listen your suggestions
+                    about our services.
+                  </p>
+                  <a
+                    href="contact.html"
+                    class="btn btn-outline-secondary btn-lg"
+                    >Contact Us</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a
+          class="carousel-control-prev"
+          href="#showcaseSlider"
+          role="button"
+          data-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a
+          class="carousel-control-next"
+          href="#showcaseSlider"
+          role="button"
+          data-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </section>
+    <!-- new arrivals -->
+    <section id="new-arrivals">
+      <div class="container">
+        <h1 class="text-center text-light py-5">New Arrivals</h1>
+         {% if new_arrivals %}
+            <div class="autoplay slider" class="w-100">
+              {% for book in new_arrivals %}
+                  <div class="w-75">
+                    <a href="{% url 'bookListing' book.id %}" class="mb-5 d-block">
+                      <img src="{{ book.photo.url }}" alt="" class="img-fluid" />
+                    </a>
+                  </div>
+              {% endfor %}
+            </div>
+         {% else %}
+            <h3 class="text-center text-light"></h3>
+         {% endif %}
+      </div>
+    </section>
+    <!-- pick of the week section -->
+    <section id="pick-of-the-week" class="mb-5">
+      <div class="container">
+        <h1 class="text-center text-secondary py-5">Pick of the week</h1>
+        {% if pick_of_the_week %}
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-3">
+                <a href="{% url 'bookListing' pick_of_the_week.id %}"
+                  ><img
+                    src="{{ pick_of_the_week.photo.url }}"
+                    alt=""
+                    class="img-fluid rounded-circle d-none d-sm-block"
+                /></a>
+              </div>
+              <div class="col-sm-6 col-md-9">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title text-center">
+                      <strong
+                        ><span class="text-secondary"
+                          ><i class="fas fa-award"></i
+                        ></span>
+                        <a href="{% url 'bookListing' pick_of_the_week.id %}">{{ pick_of_the_week.title }}</a>
+                      </strong>
+                    </h5>
+                    <div class="card-text text-center">
+                      <ul class="list-group">
+                        <li class="list-group-item">
+                          Author: <strong>{{ pick_of_the_week.author }}</strong>
+                        </li>
+                        <li class="list-group-item">
+                          Price: <span class="text-triadic-one"> Rs. {{ pick_of_the_week.price }}</span>
+                        </li>
+                        <li class="list-group-item">ISBN: {{ pick_of_the_week.isbn }}</li>
+                        <li class="list-group-item">Genre: {{ pick_of_the_week.genre }}</li>
+                        <li class="list-group-item">Size: {{ pick_of_the_week.size }}</li>
+                        <li class="list-group-item">Pages: {{ pick_of_the_week.pages }}</li>
+                        <li class="list-group-item">
+                          Publisher: <a href="{{ pick_of_the_week.publisher.web_url }}">{{ pick_of_the_week.publisher }}</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {% else %}
+            <h3 class="text-center">Pick of the week is not available at the moment</h3>
+        {% endif %}
+      </div>
+    </section>
+    <!-- best sellers -->
+    <section id="new-arrivals" class="py-4">
+      <div class="container">
+        <h1 class="text-center text-light py-5">Best Sellers</h1>
+        <div class="autoplay slider" class="w-100">
+          {% if best_sellers %}
+              {% for book in best_sellers %}
+                  <div class="w-75">
+                    <a href="{% url 'bookListing' book.id %}" class="mb-5 d-block">
+                      <img src="{{ book.photo.url }}" alt="" class="img-fluid" />
+                    </a>
+                  </div>
+              {% endfor %}
+          {% else %}
+              <h3 class="text-center text-light">Best sellers are not available at the moment</h3>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    <!-- newsletter -->
+    {% include 'partials/_newsletter.html' %}
+
+    {% include 'partials/_footer.html' %}
+{% endblock %}

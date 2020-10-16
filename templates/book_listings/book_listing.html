@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'partials/_navbar.html' %}
+    <section id="search-form">
+      <div class="dark-overlay">
+        <div class="container">
+          <form action="{% url 'search' %}" class="form-group justify-content-center mt-5">
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <select
+                  name="categories"
+                  id="categories"
+                  class="form-control mb-2 mr-2"
+                >
+                  <option selected="true" disabled="disabled">
+                    Categories
+                  </option>
+                  {% if genre %}
+                      {% for key,value in genre.items %}
+                        <option value="{{ key }}">{{ value }}</option>
+                      {% endfor %}
+                  {% endif %}
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <input
+                  name="title"
+                  type="text"
+                  class="form-control mb-2 mr-2"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-sm-3">
+                <input
+                  name="author"
+                  type="text"
+                  class="form-control mb-2 mr-2"
+                  placeholder="Author"
+                />
+              </div>
+              <div class="col-sm-3">
+                <input
+                  name="isbn"
+                  type="text"
+                  class="form-control mb-2 mr-2"
+                  placeholder="ISBN"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-secondary btn-block" type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- breadcrumbs -->
+    <section id="navigation-bc" class="mt-3">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'index' %}"> <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="{% url 'bookListings' %}">Browse</a>
+            </li>
+            <li class="breadcrumb-item active">{{ book.title }}</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+    <!-- book-section -->
+    <section id="book-info">
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col-md-6">
+            <div class="row mb-5 justify-content-center">
+              <div class="col-md-4">
+                <img src="{{ book.photo.url }}" alt="" class="img-fluid mb-5" />
+                <a
+                  href=""
+                  class="btn btn-secondary btn-block"
+                  data-toggle="modal"
+                  data-target="#inquiry-modal"
+                  >Make Inquiry</a
+                >
+              </div>
+              <div class="col-md-8">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Title: {{ book.title }}</li>
+                  <li class="list-group-item">Author: {{ book.author }}</li>
+                  <li class="list-group-item">
+                    Price: <span class="text-triadic-one"> Rs. {{ book.price }}</span>
+                  </li>
+                  <li class="list-group-item">ISBN: {{ book.isbn }}</li>
+                  <li class="list-group-item">Genre: {{ book.genre }}</li>
+                  <li class="list-group-item">Size: {{ book.size }}</li>
+                  <li class="list-group-item">Pages: {{ book.pages }}</li>
+                  <li class="list-group-item">
+                    Publisher: <a href="{{ book.publisher.web_url }}" class="text-triadic-one" target="_blank">{{ book.publisher }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="card mb-5">
+                  <div class="card-header">
+                    <h5>Description:</h5>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text text-justify">
+                      {{ book.description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-5">
+            <div class="row">
+              <div class="col">
+                <div class="card">
+                  <div class="card-header bg-secondary text-light">
+                    <h5>About the author</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5
+                      class="author-name card-title text-center text-secondary"
+                    >
+                        {{ book.author }}
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col">
+                            <img
+                              src="{{ book.author.photo.url }}"
+                              alt=""
+                              class="img-fluid mt-2 border rounded"
+                            />
+                          </div>
+                        </div>
+                        <div class="row text-center">
+                          <div class="col">
+                            <div class="author-social">
+                              <div
+                                class="row no-gutters justify-content-center my-4"
+                              >
+                                {% if book.author.fb_url %}
+                                    <div class="col">
+                                      <a href="{{ book.author.fb_url }}" class="text-secondary" target="_blank"
+                                        ><i class="fab fa-facebook fa-2x"></i
+                                      ></a>
+                                    </div>
+                                {% endif %}
+                                {% if book.author.insta_url %}
+                                    <div class="col">
+                                      <a href="{{ book.author.insta_url }}" class="text-secondary" target="_blank"
+                                        ><i
+                                          class="fab fa-instagram-square fa-2x"
+                                        ></i
+                                      ></a>
+                                    </div>
+                                {% endif %}
+                                {% if book.author.twitter_url %}
+                                    <div class="col">
+                                      <a href="{{ book.author.twitter_url }}" class="text-secondary" target="_blank"
+                                        ><i class="fab fa-twitter-square fa-2x"></i
+                                      ></a>
+                                    </div>
+                                {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 p-0">
+                        <p>
+                          {{ book.author.description }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- inquiry modal -->
+    <div id="inquiry-modal" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <h5 class="modal-title text-light">Book Inquiry</h5>
+            <button class="text-light close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" class="form-group">
+            {% csrf_token %}
+              <label for="title">Book title:</label>
+              <input
+                name="title"
+                type="text"
+                class="form-control mb-3"
+                value="{{ book.title }}"
+                required
+              />
+                {% if request.user.is_authenticated %}
+                    <label for="user_id">User ID:</label>
+                    <input
+                        name="user_id"
+                        type="text"
+                        class="form-control mb-3"
+                        value="{{ request.user.id }}"
+                        required
+                      />
+                {% endif %}
+              <label for="full-name">Full Name:</label>
+                     <input
+                        name="full-name"
+                        type="text"
+                        class="form-control mb-3"
+                        {% if request.user.is_authenticated %}
+                            value="{{ request.user.get_full_name }}"
+                        {% endif %}
+                        required
+                      />
+              <label for="email">email:</label>
+              <input
+                name="email"
+                type="email"
+                class="form-control mb-3"
+                {% if request.user.is_authenticated %}
+                    value="{{ request.user.email }}"
+                {% endif %}
+                required
+              />
+              <label for="phone">Phone:</label>
+              <input
+                name="phone"
+                type="text"
+                class="form-control mb-3"
+                required
+              />
+              <label for="phone">Delivery address:</label>
+              <input
+                name="address"
+                type="text"
+                class="form-control mb-3"
+                required
+              />
+              <label for="quantity">Quantity:</label>
+              <input
+                name="quantity"
+                type="number"
+                class="form-control mb-3"
+                required
+              />
+              <hr />
+              <input
+                type="submit"
+                value="Send"
+                class="btn btn-block btn-secondary"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include 'partials/_footer.html' %}
+{% endblock %}

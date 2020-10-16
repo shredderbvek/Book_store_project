@@ -1,0 +1,31 @@
+<section id="newsletter" class="text-center p-5 bg-triadic-one text-white">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1 class="mb-4">Sign Up For Newsletter</h1>
+            <p>
+              Never get late to find out about the new arrivals and exclusive
+              offers
+            </p>
+            <form method="post" class="form-inline justify-content-center">
+                {% csrf_token %}
+              <input
+                name="name"
+                type="text"
+                class="form-control mb-2 mr-2"
+                placeholder="Enter your Full name"
+                required
+              />
+              <input
+                name="email"
+                type="email"
+                class="form-control mb-2 mr-2"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" class="btn btn-primary mb-2">Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+</section>

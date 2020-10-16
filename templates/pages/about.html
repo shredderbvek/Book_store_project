@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_navbar.html' %}
+
+    <!-- about banner -->
+    <section class="banner bg-secondary text-white text-center">
+      <div class="container">
+        <div class="align-middle">
+          <h2 class="display-3 pt-5">About Us</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- breadcrumbs -->
+    <section id="navigation-bc" class="mt-3">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'index' %}"> <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item active">About</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <!-- about us -->
+    <section id="about-us" class="mb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="{% static 'img/about-us.jpg' %}" alt="" class="img-fluid p-3" />
+          </div>
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text">
+                  Since 1991, Hamro Pustakalaya has existed as a tiny island of
+                  peace in a fast-moving world. Thriving and growing every year,
+                  the business that started from a post-card board selling
+                  postcards to tourists in the heart of Lakeside has grown to be
+                  one of the hidden Jewels of Pokhara with floor-to-ceiling
+                  stacks of books and a generally inclusive vibe that makes it
+                  seem like a neighborhood spot for anyone and everyone. It now
+                  has one of the largest collection of books in Nepal and is a
+                  place you can easily get lost in. The shelves are filled with
+                  books you might have a hard time finding anywhere else in
+                  Nepal- the bookstore holds around 1 million books in stock and
+                  is a wholesale distributor as well.
+                  <br />
+                  <br />
+                  In a time when we sleep with our smartphones next to us and
+                  stare into our computer screens all day, what you share on
+                  social media tells a story about who you are and many can’t
+                  resist telling a story about themselves as smart, worldly, and
+                  well-read. While the concept started with #bookstagramming the
+                  lofty collection at the book shop, Hamro Pustakalya has come a
+                  long way and is aiming create the largest community of book
+                  readers in Nepal. Through Hamro Pustakalya, you can have
+                  multiple Universes at your doorsteps, no kidding! But it's
+                  more than just an online bookstore. We are also aiming to
+                  connect authors to their readers in a different way, a better
+                  way and we hope to inspire a reading culture in Nepal. We
+                  think we can make reading cool again- and now that the world
+                  of reading has moved to digital, we think we're going in a
+                  good direction.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% include 'partials/_footer.html' %}
+{% endblock %}

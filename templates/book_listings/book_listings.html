@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    {%  include 'partials/_navbar.html' %}
+    <section id="search-form">
+      <div class="dark-overlay">
+        <div class="container">
+          <form action="{% url 'search' %}" class="form-group justify-content-center mt-5">
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <select
+                  name="categories"
+                  id="categories"
+                  class="form-control mb-2 mr-2"
+                >
+                  <option selected="true" disabled="disabled">
+                    Categories
+                  </option>
+                  {% if genre %}
+                      {% for key,value in genre.items %}
+                        <option value="{{ key }}">{{ value }}</option>
+                      {% endfor %}
+                  {% endif %}
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <input
+                  name="title"
+                  type="text"
+                  class="form-control mb-2 mr-2"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-sm-3">
+                <input
+                  name="author"
+                  type="text"
+                  class="form-control mb-2 mr-2"
+                  placeholder="Author"
+                />
+              </div>
+              <div class="col-sm-3">
+                <input
+                  name="isbn"
+                  type="text"
+                  class="form-control mb-2 mr-2"
+                  placeholder="ISBN"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-secondary btn-block" type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- breadcrumbs -->
+    <section id="navigation-bc" class="mt-3">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'index' %}"> <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item active">Browse</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <section id="book-listings" class="py-5">
+      <div class="container">
+        <div class="row">
+          {% if books_listing %}
+            {% for book in books_listing %}
+              <div class="col-md-6 col-lg-3 mb-4">
+            <a href="{% url 'bookListing' book.id %}">
+              <div class="book-listing">
+                <div class="card">
+                  <img
+                    src="{{ book.photo.url }}"
+                    alt=""
+                    class="card-top-image img-fluid"
+                  />
+                </div>
+              </div>
+            </a>
+          </div>
+            {% endfor %}
+          {% else %}
+            <div class="col">
+                <P class="text-center">There are no books available</P>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    <!-- pagination -->
+    <section id="pg-nav">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            {% if books_listing.has_other_pages %}
+                <ul class="pagination">
+                  {% if books_listing.has_previous %}
+                      <li class="page-item">
+                        <a class="page-link" href="?={{ books_listing.previous_page_number }}">&laquo;</a>
+                      </li>
+                  {% else %}
+                      <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo;</a>
+                  </li>
+                  {% endif %}
+                  {% for i in books_listing.paginator.page_range %}
+                      {% if i == books_listing.number %}
+                          <li class="page-item active">
+                            <a class="page-link">{{ i }}</a>
+                          </li>
+                      {% else %}
+                          <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                          </li>
+                      {% endif %}
+                  {% endfor %}
+                  {%  if books_listing.has_next %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ books_listing.next_page_number }}">&raquo;</a>
+                      </li>
+                  {% else %}
+                      <li class="page-item disabled">
+                        <a class="page-link" >&raquo;</a>
+                    </li>
+                  {% endif %}
+                </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {%  include 'partials/_footer.html' %}
+
+{% endblock %}

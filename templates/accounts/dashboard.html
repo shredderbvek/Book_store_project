@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+    {% include 'partials/_navbar.html' %}
+    {% include 'partials/_alerts.html' %}
+    <section class="banner bg-secondary text-white text-center">
+      <div class="container">
+        <div class="align-middle">
+          <h2 class="display-3 pt-5">User Dashboard</h2>
+          <p class="lead">Manage your inquiries here</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- breadcrumbs -->
+    <section id="navigation-bc" class="mt-3">
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{% url 'index' %}"> <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <section id="dashboard" class="my-5">
+      <div class="container">
+        <h2 class="text-secondary mb-3">Welcome {{ request.user.first_name }} {{ request.user.last_name }}</h2>
+        <p class="mb-3">You can view the status of all your inquiries here.</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Inquiry ID</th>
+              <th>Title</th>
+              <th>Quantity</th>
+              <th>Inquiry Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody style="font-family: 'Open Sans', sans-serif;">
+            {% if user_inquiries %}
+                {% for user_inquiry in user_inquiries %}
+                    <tr>
+                      <td>{{ user_inquiry.id }}</td>
+                      <td>{{ user_inquiry.book_title }}</td>
+                      <td>{{ user_inquiry.quantity }}</td>
+                      <td>{{ user_inquiry.inquiry_date | naturalday }}</td>
+                      <td>
+                        {% if user_inquiry.is_delivered %}
+                            <span class="text-success"><i class="far fa-check-circle"></i> Delivery completed</span>
+                        {% else %}
+                            <span class="text-warning"><i class="fas fa-hourglass-half"></i> Pending delivery</span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>You have no inquiries</tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% include 'partials/_footer.html' %}
+{% endblock %}
